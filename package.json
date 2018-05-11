@@ -4,15 +4,21 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js --exec babel-node",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@babel/core": "^7.0.0-beta.46",
+    "@babel/node": "^7.0.0-beta.46",
+    "@babel/preset-env": "^7.0.0-beta.46",
     "apollo-server": "^2.0.0-beta.1",
     "apollo-server-express": "^2.0.0-beta.0",
     "graphql": "^0.13.2",
-    "mongoose": "^5.0.17"
+    "lodash": "^4.17.10",
+    "mongoose": "^5.0.17",
+    "nodemon": "^1.17.4"
   }
 }

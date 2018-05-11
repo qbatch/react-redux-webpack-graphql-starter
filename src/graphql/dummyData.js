@@ -1,0 +1,40 @@
+export const books = [{
+  id: "1",
+  title: 'Harry Potter and the Chamber of Secrets',
+  author: 'J.K. Rowling',
+}, {
+  id: "2",
+  title: 'Jurassic Park',
+  author: 'Michael Crichton',
+},];
+
+export const location = {
+  long: "21",
+  lat: "18"
+};
+
+export const users = [{
+  id: "3",
+  name: 'Amir mughal',
+  age: '21',
+  books: books,
+  location: location
+}, {
+  id: "5",
+  name: 'Amir mughal',
+  age: '21',
+  books: books,
+  location: location
+}, {
+  id: "9",
+  name: 'Amir mughal',
+  age: '21',
+  books: books,
+  location: location
+}, {
+  id: "1",
+  name: 'Amir mughal',
+  age: '21',
+  books: books,
+  location: location
+}];
