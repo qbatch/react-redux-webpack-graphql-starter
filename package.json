@@ -17,8 +17,8 @@
     "apollo-server": "^2.0.0-beta.1",
     "apollo-server-express": "^2.0.0-beta.0",
     "graphql": "^0.13.2",
+    "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.10",
-    "mongoose": "^5.0.17",
-    "nodemon": "^1.17.4"
+    "mongoose": "^5.0.17"
   }
 }
