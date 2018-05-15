@@ -1,6 +1,6 @@
 import jwt  from 'jsonwebtoken';
-import  User from '../../../../models/user_model';
-import config from '../../../../config';
+import User from '../../../models/user_model';
+import config from '../../../config/env';
 
 const registerUser = async (parent, args) => {
   try {
@@ -17,7 +17,7 @@ const registerUser = async (parent, args) => {
   }
 }
 
-const login = async (parent, args) => {
+const loginUser = async (parent, args) => {
   try {
     if(args.token) {
       const token = jwt.verify(args.token, config.SECRET_KEY);
@@ -46,4 +46,4 @@ const login = async (parent, args) => {
   }
 }
 
-export default {login, registerUser};
+export default { loginUser, registerUser };

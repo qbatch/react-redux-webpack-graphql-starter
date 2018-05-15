@@ -1,15 +1,14 @@
 import { gql } from 'apollo-server';
-import Book from './book/type';
+import Book from './book/types/type';
 import Locations from './types/location';
 import Response from './types/response';
-import User from './user/type';
+import User from './user/types/type';
 
-import userMutations from './user/mutations';
-import bookMutations from './book/mutations';
+import userMutations from './user/types/mutations';
+import bookMutations from './book/types/mutations';
 
-import userQueries from './user/queries';
-import bookQueries from './book/queries';
-import { makeExecutableSchema } from 'graphql-tools';
+import userQueries from './user/types/queries';
+import bookQueries from './book/types/queries';
 
 const typeDefs = gql`
   type Query {
@@ -21,7 +20,7 @@ const typeDefs = gql`
   }
 `;
 
-module.exports = [
+export default [
   userQueries,
   userMutations,
   bookQueries,
@@ -31,4 +30,4 @@ module.exports = [
   Locations,
   Response,
   User
-];
+]
