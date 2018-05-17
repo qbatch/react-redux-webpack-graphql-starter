@@ -1,9 +1,11 @@
 import { books } from '../../../utils/dummyData';
+import Book from '../../../models/books';
 
-const addBook = (parent, args) => {
-  const { title, author } = args;
-  books.push({id: '4', title, author});
-  return books[books.length-1];
+const addBook = async (parent, args) => {
+  const book = await Book.create(args);
+  if(book) {
+    return book;
+  }
 }
 
 export default { addBook };

@@ -1,7 +1,11 @@
 import { users } from '../../../utils/dummyData';
+import User from '../../../models/users';
 
-const getUsers = (parent, args) => {
-  return users;
+const getUsers = async (parent, args) => {
+  const users = await User.find({});
+  if(users) {
+    return users;
+  }
 }
 
 const getUserById = (parent, args) => {
