@@ -3,13 +3,14 @@ import User from '../../../models/user_model';
 import config from '../../../config/env';
 
 const registerUser = async (parent, args) => {
+  console.log(args);
   try {
     const token = jwt.sign({ email: args.email, password: args.password }, config.SECRET_KEY, { expiresIn: '1h' });
     args.token = token;
 
     const user = await User.create(args);
     if(user) {
-      return {status: true, user: user, msg: 'user registereg successfully!'};
+      return {status: true, user: user, msg: 'user registered successfully!'};
     }
     return {status: false, user: user, msg: 'user not registered!'};
   } catch (error) {
@@ -19,30 +20,19 @@ const registerUser = async (parent, args) => {
 
 const loginUser = async (parent, args) => {
   try {
-    if(args.token) {
-      const token = jwt.verify(args.token, config.SECRET_KEY);
-      if(token.exp > 0) {
-        const user = await User.findOne({email: token.email, password: token.password});
-        if(user) {
-          if(user.email === args.email && user.password === args.password) {
-            return {status: true, user: user, msg: 'user logged in successfully!'};
-          }
-        }
-      } else {
-        const user = await User.findOne({email: token.email, password: token.password});
-        if(user) {
-          if(user.email === args.email && user.password === args.password) {
-            const updatedUser = await User.findOneAndUpdate({_id: user._id}, token, {new: true});
-            if(updatedUser) {
-              return {status: true, user: updatedUser, msg: 'user logged in successfully!'};
-            }
-          }
-        }
-      }
+    const user = await User.findOne({email: args.email, password: args.password});
+    if(user) {
+      jwt.verify(user.token, config.SECRET_KEY);
+      return {status: true, user: updatedUser, msg: 'loggedin successfully !'};
+    } else {
+      return {status: false, user: args, msg: 'Please enter corrent email password'};      
     }
-    return {status: false, user: args, msg: 'User is not authorized'};
   } catch (error) {
-    return {status: false, user: args, msg: error.message};
+    const token = jwt.sign({ email: args.email, password: args.password }, config.SECRET_KEY, { expiresIn: '1h' });
+    const updatedUser = await User.findOneAndUpdate({email: args.email}, {token: token}, {new: true});
+    if(updatedUser) {
+      return {status: true, user: updatedUser, msg: 'loggedin successfully !'};
+    }
   }
 }
 
