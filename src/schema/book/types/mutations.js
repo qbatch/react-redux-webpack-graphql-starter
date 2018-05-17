@@ -1,9 +1,9 @@
 import { gql } from 'apollo-server';
 
-const typeDef = gql`
+const Mutations = gql`
   extend type Mutation {
     addBook(title: String, author: String): Book
   }
 `;
 
-export default typeDef;
+export default Mutations;

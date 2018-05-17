@@ -1,8 +1,4 @@
-import { merge } from 'lodash';
-import typeDefs from '../schema/schema';
-import userResolvers from './user/resolvers';
-import bookResolvers from './book/resolvers';
+import typeDefs from './types';
+import resolvers from './resolvers';
 
-const resolvers = {};
-
-module.exports = { typeDefs, resolvers: merge(resolvers, userResolvers, bookResolvers) };
+export default { typeDefs, resolvers };

@@ -1,9 +1,6 @@
-import bookQueryResolver from './query';
-import bookMutationResolver from './mutation';
+import Query from './queries';
+import Mutation from './mutations';
 
-const resolvers = {
-  Query: bookQueryResolver,
-  Mutation: bookMutationResolver
-}
+const resolvers = { Query, Mutation };
 
 export default resolvers;

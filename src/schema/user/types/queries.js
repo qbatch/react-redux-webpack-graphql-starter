@@ -1,6 +1,6 @@
 import { gql } from 'apollo-server';
 
-const typeDef = gql`
+const Queries = gql`
   extend type Query {
     getUserById(id: ID!): User
     getSomeUsers(first: ID!, offset: ID!): [User]
@@ -8,4 +8,4 @@ const typeDef = gql`
   }
 `;
 
-export default typeDef;
+export default Queries;

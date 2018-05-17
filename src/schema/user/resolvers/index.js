@@ -1,9 +1,6 @@
-import userQueryResolver from './query';
-import userMutationResolver from './mutation';
+import Query from './queries';
+import Mutation from './mutations';
 
-const resolvers = {
-  Query: userQueryResolver,
-  Mutation: userMutationResolver
-}
+const resolvers = { Query, Mutation };
 
 export default resolvers;

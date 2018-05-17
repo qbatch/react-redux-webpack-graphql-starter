@@ -1,10 +1,10 @@
 import { gql } from 'apollo-server';
 
-const typeDef = gql`
+const Location = gql`
   type Location {
     long: String
     lat: String
   }
 `;
 
-export default typeDef;
+export default Location;

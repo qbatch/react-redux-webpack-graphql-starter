@@ -1,23 +1,23 @@
-const mongoose = require( 'mongoose' ); 
-const dbURI = 'mongodb://localhost/amazon_inventory'; 
+import mongoose from 'mongoose';
+import { MONGO_URL } from './constants';
 
-mongoose.connect(dbURI); 
+mongoose.connect(MONGO_URL);
 
-mongoose.connection.on('connected', () => {  
-  console.log('Mongoose default connection open to ' + dbURI);
-}); 
-
-mongoose.connection.on('error', (err) => {  
-  console.log('Mongoose default connection error: ' + err);
-}); 
-
-mongoose.connection.on('disconnected', () => {  
-  console.log('Mongoose default connection disconnected'); 
+mongoose.connection.on('connected', () => {
+  console.log('Mongoose default connection open to ' + MONGO_URL);
 });
 
-process.on('SIGINT', function() {  
-  mongoose.connection.close( () => { 
-    console.log('Mongoose default connection disconnected through app termination'); 
-    process.exit(0); 
-  }); 
-}); 
+mongoose.connection.on('error', (err) => {
+  console.log('Mongoose default connection error: ' + err);
+});
+
+mongoose.connection.on('disconnected', () => {
+  console.log('Mongoose default connection disconnected');
+});
+
+process.on('SIGINT', function() {
+  mongoose.connection.close( () => {
+    console.log('Mongoose default connection disconnected through app termination');
+    process.exit(0);
+  });
+});
