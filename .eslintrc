@@ -1,3 +1,10 @@
 {
-    "extends": "airbnb-base"
+  "extends": "airbnb-base",
+  "rules": {
+    "comma-dangle": ["error", "never"],
+    "no-underscore-dangle": "off",
+    "import/no-extraneous-dependencies": "off",
+    "import/no-unresolved": "off",
+    "import/extensions": "off"
+  },
 }
