@@ -17,6 +17,9 @@ const User = gql`
     books: [Book]
     location: Location
   }
+  type Count {
+    count: ID!
+  }
 `;
 
 export default [User, Mutations, Queries];

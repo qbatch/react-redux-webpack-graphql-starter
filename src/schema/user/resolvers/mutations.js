@@ -3,7 +3,6 @@ import User from '../../../models/users';
 import { SECRET_KEY } from '../../../config/constants';
 
 const registerUser = async (parent, args) => {
-  console.log(args);
   try {
     const token = jwt.sign({ email: args.email, password: args.password }, SECRET_KEY, { expiresIn: '1h' });
     args.token = token;
