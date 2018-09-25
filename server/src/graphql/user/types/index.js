@@ -13,14 +13,9 @@ const User = gql`
     token: String
     age: String
     books: [Book]
-    location: Location
   }
   type Count {
     count: ID!
-  }
-  type Location {
-    long: String
-    lat: String
   }
 `;
 
