@@ -1,5 +1,5 @@
 import { ApolloServer } from 'apollo-server';
-import Schema from './schema';
+import Schema from './graphql';
 import './config/database';
 
 const server = new ApolloServer(Schema);

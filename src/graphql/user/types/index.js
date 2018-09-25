@@ -1,13 +1,11 @@
 import { gql } from 'apollo-server';
 
-import Location from '../../types/location';
-import Book from '../../book/types';
-
 import Mutations from './mutations';
 import Queries from './queries';
 
 const User = gql`
   type User {
+    _id: ID,
     name: String
     userName: String
     email: String!
@@ -19,6 +17,10 @@ const User = gql`
   }
   type Count {
     count: ID!
+  }
+  type Location {
+    long: String
+    lat: String
   }
 `;
 

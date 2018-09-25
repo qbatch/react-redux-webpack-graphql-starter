@@ -5,6 +5,7 @@ const Queries = gql`
     getUserById(id: ID!): User
     getUsers(first: ID!, offset: ID!): [User]
     getUsersCount: Count
+    getUserByUserName(userName: String!): User
   }
 `;
 
