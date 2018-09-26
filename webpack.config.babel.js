@@ -5,13 +5,18 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 
 const config = {
   entry: {
-    app: path.resolve(__dirname, 'client/index.js'),
+    app: [
+      path.resolve(__dirname, 'client/index.js'),
+      'webpack-hot-middleware/client'
+    ]
   },
   mode: 'development',
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
     publicPath: '/dist/',
+    hotUpdateChunkFilename: 'hot/hot-update.js',
+    hotUpdateMainFilename: 'hot/hot-update.json'
   },
   module: {
     rules: [{
@@ -25,6 +30,13 @@ const config = {
         use: ['css-loader', 'sass-loader'],
         publicPath: path.resolve(__dirname, 'dist'),
       }),
+    }, {
+      test: /\.html$/,
+      use: [
+        {
+          loader: "html-loader"
+        }
+      ]
     }],
   },
   plugins: [
