@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Webpack 4 and GraphQL",
   "author": "Ibrahim Zahoor <ibrahim@qbatch.com>",
-  "main": "src/index.js",
+  "main": "server/index.js",
   "license": "MIT",
   "repository": {
     "type": "git",
@@ -18,18 +18,19 @@
   "scripts": {
     "build": "rm -rf dist; webpack-cli --config *.prod.js",
     "dev": "webpack-serve --config *.dev.js",
-    "start": "nodemon src/index.js --exec babel-node"
+    "start": "nodemon server/index.js --exec babel-node"
   },
   "dependencies": {
     "antd": "^3.9.3",
-    "react": "^16.4.1",
-    "react-dom": "^16.4.1",
-    "react-hot-loader": "^4.3.3",
-    "apollo-server": "^2.0.0-beta.1",
+    "apollo-server-express": "^2.1.0",
+    "express": "^4.16.3",
     "graphql": "^0.13.2",
     "jsonwebtoken": "^8.2.1",
     "lodash": "^4.17.10",
-    "mongoose": "^5.0.17"
+    "mongoose": "^5.0.17",
+    "react": "^16.4.1",
+    "react-dom": "^16.4.1",
+    "react-hot-loader": "^4.3.3"
   },
   "devDependencies": {
     "@babel/core": "^7.0.0-beta.51",

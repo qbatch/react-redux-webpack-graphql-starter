@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import User from '../../../models/users';
-import { SECRET_KEY } from '../../../config/constants';
+import { SECRET_KEY } from '../../../../config/constants';
 
 const registerUser = async (parent, args) => {
   try {
