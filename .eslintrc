@@ -3,11 +3,8 @@
     "browser": true,
     "jest": true
   },
-  "extends": "airbnb-base",
-  "parser": "babel-eslint",
-  "rules": {
-    "semi": [1, "never"],
-    "max-len": [1, 80],
-    "arrow-parens": [2, "as-needed"]
-  }
+  "extends": [
+    "airbnb/base",
+    "plugin:react/recommended"
+  ]
 }

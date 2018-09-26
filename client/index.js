@@ -1,8 +1,7 @@
-import React from 'react'
-import { render } from 'react-dom'
-import 'antd/dist/antd.css'
+import React from 'react';
+import { render } from 'react-dom';
 
-import App from './App'
+import Home from './pages/Home';
 
-const root = document.getElementById('root')
-if (root) render(<App />, root)
+const root = document.getElementById('root');
+render(<Home />, root);
