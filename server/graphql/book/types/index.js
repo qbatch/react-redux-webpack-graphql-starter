@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 import Queries from './queries';
 import Mutations from './mutations';
 

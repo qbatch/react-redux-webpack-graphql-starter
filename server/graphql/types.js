@@ -1,4 +1,4 @@
-import { gql } from 'apollo-server';
+import { gql } from 'apollo-server-express';
 import User from './user/types';
 import Book from './book/types';
 import Response from './generic-types/response';
