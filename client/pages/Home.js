@@ -1,19 +1,11 @@
-import React from 'react'
+import React from 'react';
+import { DatePicker } from 'antd';
 
 import Test from '../components/test'
 
 export default class Home extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
-    return (
-      <div>
-        <h1>Hello World!</h1>
-        <Test />
-      </div>
-    );
+    return ('sadasdas');
   }
 }
 

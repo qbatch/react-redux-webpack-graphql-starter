@@ -2,9 +2,11 @@
   "presets": [
     "@babel/preset-react",
     "@babel/preset-env"
-  ],
-
+  ], 
   "plugins": [
-    "react-hot-loader/babel"    
+    [
+      "import", 
+      { "libraryName": "antd", "libraryDirectory": "es", "style": true },
+      "react-hot-loader/babel"    ]
   ]
 }
