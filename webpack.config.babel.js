@@ -6,8 +6,8 @@ import HtmlWebpackPlugin from 'html-webpack-plugin';
 const config = {
   entry: {
     app: path.resolve(__dirname, 'client/index.js'),
-    vendor: ['react', 'react-dom'],
   },
+  mode: 'development',
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'),
@@ -36,9 +36,8 @@ const config = {
       filename: 'index.html',
       template: path.resolve(__dirname, 'client/index.html'),
     }),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: 'vendor',
-    }),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoEmitOnErrorsPlugin(),
   ],
 };
 
