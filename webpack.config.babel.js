@@ -22,7 +22,14 @@ const config = {
       test: /\.scss|sass$/,
       use: ExtractTextPlugin.extract({
         fallback: 'style-loader',
-        use: ['css-loader', 'sass-loader'],
+        use: ['css-loader', 'sass-loader', 'less-loader'],
+        publicPath: path.resolve(__dirname, 'dist'),
+      }),
+    }, {
+      test: /\.less$/,
+      use: ExtractTextPlugin.extract({
+        fallback: 'style-loader',
+        use: ['css-loader', 'less-loader'],
         publicPath: path.resolve(__dirname, 'dist'),
       }),
     }],
