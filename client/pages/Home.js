@@ -5,8 +5,6 @@ import Test from '../components/test'
 
 export default class Home extends React.Component {
   render() {
-    return ('sadasdas');
+    return ('sadasdswswswqsqwswas');
   }
 }
-
-
