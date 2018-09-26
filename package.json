@@ -5,7 +5,7 @@
   "author": "Ibrahim Zahoor <ibrahim@qbatch.com>",
   "main": "server/index.js",
   "scripts": {
-    "start": "nodemon server/index.js --exec babel-node",
+    "start": "nodemon server/index.js --watch server --exec babel-node",
     "build": "rm -rf dist; webpack-cli --config *.prod.js",
     "dev": "webpack-serve --config *.dev.js"
   },

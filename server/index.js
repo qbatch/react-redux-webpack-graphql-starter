@@ -21,7 +21,8 @@ app.use(express.static('./dist'));
 
 app.use(webpackDevMiddleWare(compiler, {
   noInfo: true,
-  publicPath: webpackConfig.output.path,
+  writeToDisk: true,
+  publicPath: webpackConfig.output.publicPath,
 }));
 
 app.use(webpackHotMiddleWare(compiler));

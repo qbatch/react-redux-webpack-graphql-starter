@@ -1,7 +1,10 @@
 import mongoose from 'mongoose';
 import { MONGO_URL } from './constants';
 
-mongoose.connect(MONGO_URL);
+mongoose.connect(MONGO_URL, {
+  useCreateIndex: true,
+  useNewUrlParser: true,
+});
 
 mongoose.connection.on('connected', () => {
   console.log('Mongoose default connection open to ' + MONGO_URL);
