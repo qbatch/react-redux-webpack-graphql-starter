@@ -1,11 +1,14 @@
 import React, { Component } from 'react';
+import { NavLink } from 'react-router-dom'
 
 class HomeLayout extends Component {
   render() {
-    console.log(this.props, 'props');
     return (
       <div>
-        <h1>home layout</h1>
+         <NavLink to="/">About</NavLink>&nbsp;
+        <NavLink to="/Signup">Singup</NavLink>&nbsp;
+        <NavLink to="/signin">Singinin</NavLink>&nbsp;
+        <NavLink to="/">Home</NavLink>&nbsp;
         {this.props.children}
       </div>
     );

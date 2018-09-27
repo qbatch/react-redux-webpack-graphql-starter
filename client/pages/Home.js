@@ -1,10 +1,14 @@
-import React from 'react';
-import { DatePicker } from 'antd';
+import React, { Component } from 'react';
+import { DatePicker, Divider } from 'antd';
 
-import Test from '../components/test'
-
-export default class Home extends React.Component {
+class Home extends Component {
   render() {
-    return ('sadasdswswswqsqwswas');
+    return (
+      <div>
+       <DatePicker />
+      </div>
+    );
   }
 }
+
+export default Home;
