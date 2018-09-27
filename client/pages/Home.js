@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
-import { DatePicker, Divider } from 'antd';
+import SectionOne from './home/SectionOne.jsx';
 
 class Home extends Component {
   render() {
     return (
-      <div>
-       <DatePicker />
-      </div>
+      <SectionOne />
     );
   }
 }
