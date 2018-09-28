@@ -1,22 +1,30 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-//Containers
+import { store } from '../store';
+
+// Containers
 import MainContainer from '../containers/MainContainer.jsx';
-//pages
+
+// Pages
 import Home from '../pages/Home';
 import Authentication from '../pages/Authentication.jsx';
+import Profile from '../pages/Profile.jsx';
 
-export const renderRoutes = () => {
+const renderRoutes = () => {
   return (
     <Router>
-      <Switch>
-        <Route exact path="/" render={ props => <AppRoute Layout={MainContainer} Component={Home} props={props} /> } />
-        <Route exact path="/signin" render={ props => <AppRoute Component={Authentication} props={props} /> } />
-      </Switch>
+      <Provider store={store}>
+        <Switch>
+          <Route exact path="/" render={ props => <AppRoute Layout={MainContainer} Component={Home} props={props} /> } />
+          <Route exact path="/signin" render={ props => <AppRoute Component={Authentication} props={props} /> } />
+          <Route exact path="/profile" render={ props => <AppRoute Layout={MainContainer} Component={Profile} props={props} /> } />
+        </Switch>
+      </Provider>
     </Router>
-  )
-}
+  );
+};
 
 const AppRoute = ({ Component, Layout, props }) => {
   if (Layout) {
@@ -25,9 +33,13 @@ const AppRoute = ({ Component, Layout, props }) => {
         <Component {...props} />
       </Layout>
     );
-  } else if (!Component) {
-    return <Layout {...props} />;
-  } else {
-    return <Component {...props} />;
   }
+
+  if (!Component) {
+    return <Layout {...props} />;
+  }
+
+  return <Component {...props} />;
 };
+
+export default renderRoutes;
