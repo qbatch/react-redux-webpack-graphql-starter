@@ -1,10 +1,12 @@
-import React from 'react';
-import { DatePicker } from 'antd';
+import React, { Component } from 'react';
+import SectionOne from './home/SectionOne.jsx';
 
-import Test from '../components/test'
-
-export default class Home extends React.Component {
+class Home extends Component {
   render() {
-    return ('sadasdswswswqsqwswas');
+    return (
+      <SectionOne />
+    );
   }
 }
+
+export default Home;
