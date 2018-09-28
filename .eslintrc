@@ -4,8 +4,7 @@
     "jest": true
   },
   "extends": [
-    "airbnb/base",
-    "plugin:react/recommended"
+    "airbnb/base"
   ],
   "rules": {
     "comma-dangle": [
