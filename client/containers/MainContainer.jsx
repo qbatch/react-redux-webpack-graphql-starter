@@ -17,6 +17,7 @@ class MainContainer extends Component {
   }
 
   render() {
+    const { children } = this.props;
     return (
       <Layout style={{ minHeight: '100vh' }}>
         <Sider
@@ -63,7 +64,7 @@ class MainContainer extends Component {
               <Breadcrumb.Item>Bill</Breadcrumb.Item>
             </Breadcrumb>
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-              Bill is a cat.
+              { children }
             </div>
           </Content>
           <Footer style={{ textAlign: 'center' }}>
