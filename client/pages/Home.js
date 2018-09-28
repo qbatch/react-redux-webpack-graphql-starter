@@ -4,7 +4,7 @@ import SectionOne from './home/SectionOne.jsx';
 class Home extends Component {
   render() {
     return (
-      <SectionOne />
+      <h1>Home page</h1>
     );
   }
 }
