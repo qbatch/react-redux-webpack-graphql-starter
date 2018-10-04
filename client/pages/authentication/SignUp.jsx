@@ -2,16 +2,13 @@ import React, { Component } from 'react';
 import { Form, Button, Input, Icon, Card, Spin } from 'antd';
 import { connect } from 'react-redux';
 
+import { InputField  } from '../../components/InputField.jsx';
 import { signUpAction } from '../../actions/AuthenticationActions';
 import '../../stylesheet/authentication.less';
 
 const FormItem = Form.Item;
 
 class SignUp extends Component {
-  state = {
-    confirmDirty: false
-  }
-
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -26,11 +23,6 @@ class SignUp extends Component {
     });
   }
 
-  handleConfirmBlur = (e) => {
-    const value = e.target.value;
-    this.setState({ confirmDirty: this.state.confirmDirty || !!value });
-  }
-
   compareToFirstPassword = (rule, value, callback) => {
     const form = this.props.form;
     if (value && value !== form.getFieldValue('password')) {
@@ -42,9 +34,12 @@ class SignUp extends Component {
 
   validateToNextPassword = (rule, value, callback) => {
     const form = this.props.form;
-    console.log(value);
-    if (value && this.state.confirmDirty) {
+    if (value) {
       form.validateFields(['confirmPassword'], { force: true });
+    }
+
+    if (value && value.length <= 7) {
+      callback('Password Should be of More Than 7 Characters!');
     }
     callback();
   }
@@ -52,7 +47,7 @@ class SignUp extends Component {
   render() {
     console.log('signUp props', this.props);
 
-    const { getFieldDecorator, getFieldsError } = this.props.form;
+    const { getFieldDecorator } = this.props.form;
     const { fetching, fetched, error } = this.props.user;
 
     // fetching true & fetched false => Loading
@@ -66,7 +61,11 @@ class SignUp extends Component {
 
     let errorMessage = ''
     if (error) {
-      errorMessage = error.response.data.message;
+      if (error.response) {
+        errorMessage = error.response.data.message;
+      } else {
+        errorMessage = error;
+      }
     }
 
     const tailFormItemLayout = {
@@ -86,48 +85,52 @@ class SignUp extends Component {
       <Card>
         <h1 style={{ textAlign: 'center'}}>SignUp</h1>
         <Form onSubmit={this.handleSubmit}>
-          <FormItem>
-            {getFieldDecorator('userName', {
-              rules: [{
-                required: true, message: 'Enter your Username!',
-              }],
-            })(
-              <Input prefix={<Icon type={'user'} style={{ color: 'rgba(0,0,0,.25)' }} />} type={'text'} placeholder={'UserName'}/>
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('email', {
-              rules: [{
-                type: 'email', message: 'The input is not valid E-mail!',
-              }, {
-                required: true, message: 'Enter your Email!',
-              }],
-            })(
-              <Input prefix={<Icon type={'mail'} style={{ color: 'rgba(0,0,0,.25)' }} />} type={'text'} placeholder={'Email'}/>
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('password', {
-              rules: [{
-                required: true, message: 'Enter your Password!',
-              }, {
-                validator: this.validateToNextPassword,
-              }],
-            })(
-              <Input prefix={<Icon type={'lock'} style={{ color: 'rgba(0,0,0,.25)' }} />} type={'password'} placeholder={'Password'} />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('confirmPassword', {
-              rules: [{
-                required: true, message: 'Confirm your Password!',
-              }, {
-                validator: this.compareToFirstPassword,
-              }],
-            })(
-              <Input prefix={<Icon type={'lock'} style={{ color: 'rgba(0,0,0,.25)' }} />} type={'password'} placeholder={'Confirm Password'} onBlur={this.handleConfirmBlur} />
-            )}
-          </FormItem>
+          <InputField
+            getFieldDecorator = {getFieldDecorator}
+            name = {'userName'}
+            rules = {[{
+              required: true, message: 'Enter your Username!'
+            }]}
+            iconType = {'user'}
+            type = {'text'}
+            placeholder = {'UserName'}
+          />
+          <InputField
+            getFieldDecorator = {getFieldDecorator}
+            name = {'email'}
+            rules = {[{
+              required: true, message: 'Enter your E-mail!'
+            }, {
+              type: 'email', message: 'E-mail is Not Valid!'
+            }]}
+            iconType = {'mail'}
+            type = {'text'}
+            placeholder = {'E-mail'}
+          />
+          <InputField
+            getFieldDecorator = {getFieldDecorator}
+            name = {'password'}
+            rules = {[{
+              required: true, message: 'Enter your Password!'
+            }, {
+              validator: this.validateToNextPassword
+            }]}
+            iconType = {'lock'}
+            type = {'password'}
+            placeholder = {'Password'}
+          />
+          <InputField
+            getFieldDecorator = {getFieldDecorator}
+            name = {'confirmPassword'}
+            rules = {[{
+              required: true, message: 'Confirm your Password!'
+            }, {
+              validator: this.compareToFirstPassword
+            }]}
+            iconType = {'lock'}
+            type = {'password'}
+            placeholder = {'Confirm Password'}
+          />
           <FormItem {...tailFormItemLayout}>
             <Button type="primary" htmlType="submit">Register</Button>
           </FormItem>

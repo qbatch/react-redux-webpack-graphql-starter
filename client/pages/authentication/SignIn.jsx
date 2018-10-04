@@ -54,20 +54,24 @@ class SignIn extends Component {
           <InputField
             getFieldDecorator = {getFieldDecorator}
             name = {'email'}
-            required = {true}
-            message = {'Enter your username!'}
-            placeholderName = {'Email'}
+            rules = {[{
+              required: true, message: 'Enter your E-mail!'
+            }, {
+              type: 'email', message: 'E-mail is Not Valid!'
+            }]}
             iconType = {'mail'}
             type = {'text'}
+            placeholder = {'E-mail'}
           />
           <InputField
             getFieldDecorator = {getFieldDecorator}
             name = {'password'}
-            required = {true}
-            message = {'Enter your Password!'}
-            placeholderName = {'Password'}
+            rules = {[{
+              required: true, message: 'Enter your Password!'
+            }]}
             iconType = {'lock'}
             type = {'password'}
+            placeholder = {'Password'}
           />
           <FormItem>
             {getFieldDecorator('remember', {
