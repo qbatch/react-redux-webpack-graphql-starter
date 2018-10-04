@@ -11,6 +11,7 @@ import MainContainer from '../containers/MainContainer.jsx';
 import Home from '../pages/Home';
 import Authentication from '../pages/Authentication.jsx';
 import Profile from '../pages/Profile.jsx';
+import Inventory from '../pages/Inventory.jsx';
 
 const renderRoutes = () => {
   return (
@@ -20,6 +21,7 @@ const renderRoutes = () => {
           <Route exact path="/" render={ props => <AppRoute Layout={MainContainer} Component={Home} props={props} /> } />
           <Route exact path="/signin" render={ props => <AppRoute Component={Authentication} props={props} /> } />
           <Route exact path="/profile" render={ props => <AppRoute Layout={MainContainer} Component={Profile} props={props} /> } />
+          <Route exact path="/inventory" render={ props => <AppRoute Layout={MainContainer} Component={Inventory} props={props} /> } />
         </Switch>
       </Provider>
     </Router>
