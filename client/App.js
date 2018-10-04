@@ -1,5 +1,6 @@
 import React from 'react';
 import { hot } from 'react-hot-loader';
+
 import RenderRoutes from './routes';
 
 class App extends React.Component {

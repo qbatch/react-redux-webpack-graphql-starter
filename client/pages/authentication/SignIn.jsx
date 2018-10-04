@@ -1,7 +1,11 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Checkbox, Card } from 'antd';
+import { Form, Button, Checkbox, Card, Spin } from 'antd';
+import { connect } from 'react-redux';
+
 import { InputField  } from '../../components/InputField.jsx';
+import { signInAction } from '../../actions/AuthenticationActions';
 import '../../stylesheet/authentication.less';
+
 const FormItem = Form.Item;
 
 class SignIn extends Component {
@@ -10,30 +14,60 @@ class SignIn extends Component {
     this.props.form.validateFields((err, values) => {
       if (!err) {
         console.log('Received values of form: ', values);
+
+        // Dispath Action
+        const { dispatch } = this.props;
+        dispatch(signInAction(values));
       }
     });
   }
+
+  registorNowClicked = () => {
+    console.log('registorNowClicked');
+    this.props.history.push('/signup');
+  }
+
   render() {
+    console.log('signIn props', this.props);
+
     const { getFieldDecorator } = this.props.form;
+    const { fetching, fetched, error } = this.props.user;
+
+    // fetching true & fetched false => Loading
+    if (fetching && !fetched) {
+      return(
+        <div>
+          <Spin size="large" />
+        </div>
+      );
+    }
+
+    let errorMessage = ''
+    if (error) {
+      errorMessage = error.response.data.message;
+    }
+
     return (
       <Card>
-        <h1 style={{ textAlign: 'center'}}>Singin</h1>
+        <h1 style={{ textAlign: 'center'}}>SignIn</h1>
         <Form onSubmit={this.handleSubmit} className="login-form">
           <InputField
             getFieldDecorator = {getFieldDecorator}
-            name = {'userName'}
+            name = {'email'}
             required = {true}
-            message = {'Please input your username!'}
-            placeholderName = {'Username'}
-            iconType = {'user'}
+            message = {'Enter your username!'}
+            placeholderName = {'Email'}
+            iconType = {'mail'}
+            type = {'text'}
           />
           <InputField
             getFieldDecorator = {getFieldDecorator}
             name = {'password'}
             required = {true}
-            message = {'Please input your Password!'}
+            message = {'Enter your Password!'}
             placeholderName = {'Password'}
             iconType = {'lock'}
+            type = {'password'}
           />
           <FormItem>
             {getFieldDecorator('remember', {
@@ -46,8 +80,13 @@ class SignIn extends Component {
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            Or <a href="">register now!</a>
+            Or <a href="" onClick={this.registorNowClicked}>register now!</a>
           </FormItem>
+          <FormItem
+            getFieldDecorator = {getFieldDecorator}
+            validateStatus="error"
+            help={errorMessage}
+          />
         </Form>
       </Card>
     );
@@ -56,4 +95,8 @@ class SignIn extends Component {
 
 const SignInForm = Form.create()(SignIn);
 
-export default SignInForm;
+export default connect(
+  state => ({
+    user: state.user
+  })
+)(SignInForm);

@@ -1,42 +1,32 @@
 const initialState = {
   fetching: false,
   fetched: false,
-  error: null,
-  0: {
-    firstName: "",
-    lastName: "",
-    company: "",
-    department: "",
-    email: "",
-    position: ""
-  }
+  error: null
 };
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case 'PROFILE': case 'FETCH_PROFILE': {
+    case 'SIGNIN_USER': case 'SIGNUP_USER': {
       return {
         ...state,
         fetching: true
       };
     }
-    case 'PROFILE_REJECTED': case 'FETCH_PROFILE_REJECTED': {
+    case 'SIGNIN_USER_REJECTED': case 'SIGNUP_USER_REJECTED': {
       return {
         ...state,
         fetching: false,
         error: action.payload
       };
     }
-    case 'PROFILE_FULFILLED': case 'FETCH_PROFILE_FULFILLED': {
+    case 'SIGNIN_USER_FULFILLED': case 'SIGNUP_USER_FULFILLED': {
       return {
         ...state,
         fetching: false,
         fetched: true,
+        error: null,
         ...action.payload
       };
-    }
-    case 'CLEAR_PROFILE_FULFILLED': {
-      return initialState;
     }
     default: {
       return state;

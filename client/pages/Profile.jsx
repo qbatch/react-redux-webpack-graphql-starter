@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, Layout } from 'antd';
-import { profileAction, fetchProfileAction } from '../actions/ProfileActions';
 import { connect } from 'react-redux';
-
 
 import '../stylesheet/profile.less';
 

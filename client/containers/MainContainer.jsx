@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Layout, Menu, Breadcrumb, Icon } from 'antd';
 
+import AppHOC from '../hoc/AppHOC.jsx';
+
 const { Header, Content, Footer, Sider } = Layout;
 const SubMenu = Menu.SubMenu;
 
@@ -76,4 +78,4 @@ class MainContainer extends Component {
   }
 }
 
-export default MainContainer;
+export default AppHOC(MainContainer);

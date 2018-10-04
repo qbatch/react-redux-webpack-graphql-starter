@@ -1,4 +1,6 @@
+import passport from 'passport';
 import jwt from 'jsonwebtoken';
+
 import User from '../../../models/users';
 import { SECRET_KEY } from '../../../../config/constants';
 

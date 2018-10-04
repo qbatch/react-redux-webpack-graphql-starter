@@ -6,6 +6,7 @@ import { store } from '../store';
 
 // Containers
 import MainContainer from '../containers/MainContainer.jsx';
+import AuthContainer from '../containers/AuthContainer.jsx';
 
 // Pages
 import Home from '../pages/Home';
@@ -18,7 +19,8 @@ const renderRoutes = () => {
       <Provider store={store}>
         <Switch>
           <Route exact path="/" render={ props => <AppRoute Layout={MainContainer} Component={Home} props={props} /> } />
-          <Route exact path="/signin" render={ props => <AppRoute Component={Authentication} props={props} /> } />
+          <Route exact path="/signin" render={ props => <AppRoute Layout={AuthContainer} Component={Authentication} props={{...props, renderComponent: "signIn"}} /> } />
+          <Route exact path="/signup" render={ props => <AppRoute Layout={AuthContainer} Component={Authentication} props={{...props, renderComponent: "signUp"}} /> } />
           <Route exact path="/profile" render={ props => <AppRoute Layout={MainContainer} Component={Profile} props={props} /> } />
         </Switch>
       </Provider>
