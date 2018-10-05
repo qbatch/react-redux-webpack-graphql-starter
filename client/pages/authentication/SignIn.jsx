@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Form, Button, Checkbox, Card, Spin } from 'antd';
 import { connect } from 'react-redux';
 
+import Auth from '../../modules/Auth';
 import { InputField  } from '../../components/InputField.jsx';
 import { signInAction } from '../../actions/AuthenticationActions';
 import '../../stylesheet/authentication.less';
@@ -9,6 +10,39 @@ import '../../stylesheet/authentication.less';
 const FormItem = Form.Item;
 
 class SignIn extends Component {
+  state = {
+    validationError: ''
+  };
+
+  componentWillMount() {
+    console.log('SignIn componentWillMount() ', this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('SignIn componentWillReceiveProps() nextProps: ', nextProps);
+    const { user } = nextProps;
+
+    if(user) {
+      if(user.data && user.data.token) {
+        Auth.authenticateUser(user.data.token);
+
+        if (Auth.isUserAuthenticated) {
+          if (user.data.id) {
+            this.props.history.push(`/profile/${user.data.id}`);
+          }
+        } else {
+          console.log('User is not Authenticated!');
+        }
+      } else if (user.error){
+        const validationError = user.error.response.data.message;
+
+        this.setState({
+          validationError
+        });
+      }
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -23,15 +57,13 @@ class SignIn extends Component {
   }
 
   registorNowClicked = () => {
-    console.log('registorNowClicked');
     this.props.history.push('/signup');
   }
 
   render() {
-    console.log('signIn props', this.props);
-
     const { getFieldDecorator } = this.props.form;
-    const { fetching, fetched, error } = this.props.user;
+    const { fetching, fetched } = this.props.user;
+    const { validationError } = this.state;
 
     // fetching true & fetched false => Loading
     if (fetching && !fetched) {
@@ -40,11 +72,6 @@ class SignIn extends Component {
           <Spin size="large" />
         </div>
       );
-    }
-
-    let errorMessage = ''
-    if (error) {
-      errorMessage = error.response.data.message;
     }
 
     return (
@@ -84,12 +111,12 @@ class SignIn extends Component {
             <Button type="primary" htmlType="submit" className="login-form-button">
               Log in
             </Button>
-            Or <a href="" onClick={this.registorNowClicked}>register now!</a>
+            Or <a onClick={this.registorNowClicked}>register now!</a>
           </FormItem>
           <FormItem
             getFieldDecorator = {getFieldDecorator}
             validateStatus="error"
-            help={errorMessage}
+            help={validationError}
           />
         </Form>
       </Card>

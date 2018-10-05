@@ -55,7 +55,7 @@ router.post('/login', (req, res, next) => {
       return res.json(data);
     })(req, res, next);
   } catch (e) {
-    console.log('Error', e);
+    throw e;
   }
 });
 

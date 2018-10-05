@@ -1,110 +1,85 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, Layout } from 'antd';
+import { Form, Icon, Input, Button, Layout, Spin } from 'antd';
 import { connect } from 'react-redux';
 
+import { fetchUserAction } from '../actions/AuthenticationActions';
 import '../stylesheet/profile.less';
 
 const FormItem = Form.Item;
 
 class Profile extends Component {
   state = {
-    id: 0
+    error: ''
   }
 
   componentWillMount() {
-    const { dispatch } = this.props;
-    dispatch(fetchProfileAction());
+    console.log('Profile componentWillMount() ', this.props);
+
+    const { dispatch, client, match } = this.props;
+    dispatch(fetchUserAction(client, match.params.id));
   }
 
-  handleSubmit = (e) => {
-    e.preventDefault();
-    const { id } = this.state;
-    this.props.form.validateFields((err, values) => {
-      if (!err) {
-        const { dispatch } = this.props;
-        dispatch(profileAction(id, values))
+  componentWillReceiveProps(nextProps) {
+    console.log('Profile componentWillReceiveProps() nextProps: ', nextProps);
+    const { user } = nextProps;
+
+    if(user) {
+      if(!user.data && user.error) {
+        const error = user.error.response.data.message;
+
+        this.setState({
+          error
+        });
       }
-    });
+    }
   }
 
   render() {
     const { getFieldDecorator } = this.props.form;
-    const { profile } = this.props;
+    const { fetched, fetching, data } = this.props.user;
+    const { error } = this.state;
 
-    let firstName;
-    let lastName;
-    let company;
-    let department;
+    let userName;
     let email;
-    let position;
 
-    const { fetched, fetching } = profile;
-    // if (!fetched && fetching) {
-    //   return null;
-    // }
+    // fetching true & fetched false => Loading
+    if (fetching && !fetched) {
+      return(
+        <Spin size="large" />
+      );
+    }
 
-    if (profile && profile[0]) {
-      ({ firstName, lastName, company, department, email, position } = profile[0]);
+    if (data) {
+      ({ userName, email } = data);
     }
 
     return (
       <Layout style={{ minHeight: '100vh', justifyContent: 'center', alignItems: 'center' }}>
         <h1>PROFILE</h1>
-        <Form onSubmit={this.handleSubmit} className="login-form">
-          <FormItem>
-            {getFieldDecorator('firstName', {
-              initialValue: firstName,
-              rules: [{ required: false, message: 'Please input your firstname!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="FirstName" />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('lastName', {
-              initialValue: lastName,
-              rules: [{ required: false, message: 'Please input your lastName!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="LastName" />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('company', {
-              initialValue: company,
-              rules: [{ required: false, message: 'Please input your company!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Company" />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('department', {
-              initialValue: department,
-              rules: [{ required: false, message: 'Please input your department!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Department" />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('position', {
-              initialValue: position,
-              rules: [{ required: false, message: 'Please input your position!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Position" />
-            )}
-          </FormItem>
-          <FormItem>
-            {getFieldDecorator('email', {
-              initialValue: email,
-              rules: [{ required: false, message: 'Please input your email!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type={'email'} placeholder="Email" />
-            )}
-          </FormItem>
-          <FormItem>
-            <Button type="primary" htmlType="submit" className="login-form-button">
-              Save
-            </Button>
-          </FormItem>
-        </Form>
+        {data &&
+          <Form onSubmit={this.handleSubmit} className="login-form">
+            <FormItem>
+              {getFieldDecorator('userName', {
+                initialValue: userName,
+                rules: [{ required: false, message: 'Please input your UserName!' }],
+              })(
+                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="UserName" />
+              )}
+            </FormItem>
+            <FormItem>
+              {getFieldDecorator('email', {
+                initialValue: email,
+                rules: [{ required: false, message: 'Please input your email!' }],
+              })(
+                <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} type={'email'} placeholder="Email" />
+              )}
+            </FormItem>
+          </Form>
+        }
+
+        {error &&
+          <h2 style={{color: 'red'}}>{error}</h2>
+        }
       </Layout>
     );
   }
@@ -114,6 +89,6 @@ const ProfilePage = Form.create()(Profile);
 
 export default connect(
   state => ({
-    profile: state.profile
+    user: state.user
   })
 )(ProfilePage)

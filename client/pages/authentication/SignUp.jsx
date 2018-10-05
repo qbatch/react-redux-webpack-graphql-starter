@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Button, Input, Icon, Card, Spin } from 'antd';
+import { Form, Button, Card, Spin } from 'antd';
 import { connect } from 'react-redux';
 
 import { InputField  } from '../../components/InputField.jsx';
@@ -9,6 +9,33 @@ import '../../stylesheet/authentication.less';
 const FormItem = Form.Item;
 
 class SignUp extends Component {
+  state = {
+    validationError: ''
+  };
+
+  componentWillMount() {
+    console.log('SignUp componentWillMount() ', this.props);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    console.log('SignUp componentWillReceiveProps() nextProps: ', nextProps);
+    const { user } = nextProps;
+
+    if(user) {
+      if(!user.fetching) {
+        if (user.fetched && user.data && user.data.success) {
+          this.props.history.push('/signin');
+        } else if(!user.fetched && user.error != null) {
+          const validationError = user.error.response.data.message;
+
+          this.setState({
+            validationError
+          });
+        }
+      }
+    }
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -21,6 +48,10 @@ class SignUp extends Component {
         dispatch(signUpAction(values));
       }
     });
+  }
+
+  loginClicked = () => {
+    this.props.history.push('/signin');
   }
 
   compareToFirstPassword = (rule, value, callback) => {
@@ -45,10 +76,9 @@ class SignUp extends Component {
   }
 
   render() {
-    console.log('signUp props', this.props);
-
     const { getFieldDecorator } = this.props.form;
-    const { fetching, fetched, error } = this.props.user;
+    const { fetching, fetched } = this.props.user;
+    const { validationError } = this.state;
 
     // fetching true & fetched false => Loading
     if (fetching && !fetched) {
@@ -57,15 +87,6 @@ class SignUp extends Component {
           <Spin size="large" />
         </div>
       );
-    }
-
-    let errorMessage = ''
-    if (error) {
-      if (error.response) {
-        errorMessage = error.response.data.message;
-      } else {
-        errorMessage = error;
-      }
     }
 
     const tailFormItemLayout = {
@@ -131,13 +152,14 @@ class SignUp extends Component {
             type = {'password'}
             placeholder = {'Confirm Password'}
           />
-          <FormItem {...tailFormItemLayout}>
-            <Button type="primary" htmlType="submit">Register</Button>
+          <FormItem>
+            <Button style={{ float: 'left' }} type="primary" htmlType="submit">Register</Button>
+            <Button style={{ float: 'right' }} type="primary" onClick={this.loginClicked}>Login</Button>
           </FormItem>
           <FormItem
             getFieldDecorator = {getFieldDecorator}
             validateStatus="error"
-            help={errorMessage}
+            help={validationError}
           />
         </Form>
       </Card>
